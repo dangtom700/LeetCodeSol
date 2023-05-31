@@ -12,30 +12,21 @@ Every close bracket has a corresponding open bracket of the same type.
 #include<iostream>
 #include<map>
 
-bool answer(std::string s){
+bool answer1(std::string s){
     std::map<char,int> parenthesis = {{'(',0}, {')',0}, {'[',0}, {']',0}, {'{',0}, {'}',0}};
     bool Answer = false;
     for(char letter: s){
-        parenthesis.at(letter) += 1;
-        if(letter == '('){
-            parenthesis.at(letter) == parenthesis.at(')')+1 ? Answer = true: Answer = false;
-        }
-        if(letter == '['){
-            parenthesis.at(letter) == parenthesis.at(']')+1 ? Answer = true: Answer = false;
-        }
-        if(letter == '{'){
-            parenthesis.at(letter) == parenthesis.at('}')+1 ? Answer = true: Answer = false;
-        }
-        if(Answer == false) return Answer;
+        if(letter == '(' || letter == '[' || letter == '{') parenthesis.at(letter) += 1;
+        if(letter == ')') parenthesis.at('(') -= 1;
+        if(letter == ']') parenthesis.at('[') -= 1;
+        if(letter == '}') parenthesis.at('}') -= 1;
     }
-    return parenthesis.at('(') == parenthesis.at(')') 
-            && parenthesis.at('[') == parenthesis.at(']') 
-            && parenthesis.at('{') == parenthesis.at('}');
+    return parenthesis.at('(') == 0 && parenthesis.at('[') == 0 && parenthesis.at('{') == 0;
 }
+
 int main(){
-    std::string s = "(]";
-    
-    bool Answer = answer(s);
-    std::cout << Answer;
+    std::string s = "([)]";
+    bool Answer = answer1(s);
+    std::cout << Answer << std::endl;
     return 0;
 }
